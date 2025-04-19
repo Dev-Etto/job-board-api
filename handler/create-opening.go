@@ -22,7 +22,11 @@ import (
 func CreateOpeningHandler(context *gin.Context) {
 	request := CreateOpeningRequest{}
 
-	context.BindJSON(&request)
+	if err := context.BindJSON(&request); err != nil {
+		logger.Errorf("error binding request: %v", err.Error())
+		sendError(context, http.StatusBadRequest, "invalid request body")
+		return
+}
 
 	if err := request.Validate(); err != nil {
 		logger.Errorf("validating error: %v", err.Error())
