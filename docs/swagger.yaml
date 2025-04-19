@@ -1,4 +1,169 @@
+definitions:
+  handler.CreateOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
+    type: object
+  handler.ErrorResponse:
+    properties:
+      error_code:
+        type: string
+      message:
+        type: string
+    type: object
+  handler.OpeningListResponseModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.OpeningResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  handler.OpeningResponseModel:
+    properties:
+      data:
+        $ref: '#/definitions/schema.OpeningResponse'
+      message:
+        type: string
+    type: object
+  schema.OpeningResponse:
+    properties:
+      company:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        description: |-
+          CreatedAt time.Time `json:"createdAt"`
+          UpdatedAt time.Time `json:"updatedAt"`
+          DeletedAt time.Time `json:"deletedAt"`
+        type: string
+      salary:
+        type: integer
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /opening:
+    get:
+      consumes:
+      - application/json
+      description: List all job openings
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OpeningListResponseModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List openings
+      tags:
+      - openings
+    post:
+      consumes:
+      - application/json
+      description: Create a new job opening
+      parameters:
+      - description: Create opening request
+        in: body
+        name: opening
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OpeningResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create opening
+      tags:
+      - openings
+  /opening/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a new job opening
+      parameters:
+      - description: Opening ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OpeningResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete opening
+      tags:
+      - openings
+    get:
+      consumes:
+      - application/json
+      description: Find a job opening by ID
+      parameters:
+      - description: Opening ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OpeningResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Find opening
+      tags:
+      - openings
 swagger: "2.0"
