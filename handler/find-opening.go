@@ -34,6 +34,14 @@ func FindOpeningHandler(context *gin.Context) {
 		return
 	}
 
-	sendSuccess(context, "find-opening", opening)	
+	sendSuccess(context, "find-opening", schema.OpeningResponse{
+		ID:       opening.ID,
+		Role:     opening.Role,
+		Company:  opening.Company,
+		Location: opening.Location,
+		Link:     opening.Link,
+		Remote:   opening.Remote,
+		Salary:   opening.Salary,
+	})	
 }
 

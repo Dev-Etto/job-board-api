@@ -40,6 +40,14 @@ func DeleteOpeningHandler(context *gin.Context) {
 		return
 	}
 
-	sendSuccess(context,"delete-opening", opening)
+	sendSuccess(context,"delete-opening", schema.OpeningResponse{
+		ID:       opening.ID,
+		Role:     opening.Role,
+		Company:  opening.Company,
+		Location: opening.Location,
+		Link:     opening.Link,
+		Remote:   opening.Remote,
+		Salary:   opening.Salary,
+	})
 }
 

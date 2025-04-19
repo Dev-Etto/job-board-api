@@ -8,7 +8,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @basePath /api/v1
 
+// @Summary Update opening
+// @Description Update an existing job opening
+// @Tags openings
+// @Accept json
+// @Produce json
+// @Param id path string true "Opening ID"
+// @Param opening body UpdateOpeningRequest true "Update opening request"
+// @Success 200 {object} OpeningResponseModel
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /opening/{id} [put]
 func UpdateOpeningHandler(context *gin.Context) {
 	request := UpdateOpeningRequest{}
 
@@ -68,5 +81,13 @@ func UpdateOpeningHandler(context *gin.Context) {
 			return
 	}
 
-	sendSuccess(context, "update-opening", opening)
+	sendSuccess(context, "update-opening", schema.OpeningResponse{
+		ID:       opening.ID,
+		Role:     opening.Role,
+		Company:  opening.Company,
+		Location: opening.Location,
+		Link:     opening.Link,
+		Remote:   opening.Remote,
+		Salary:   opening.Salary,
+	})
 }
