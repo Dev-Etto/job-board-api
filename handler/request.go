@@ -1,6 +1,8 @@
 package handler
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type CreateOpeningRequest struct {
 	Role string `json:"role"`
