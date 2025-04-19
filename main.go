@@ -1,8 +1,10 @@
 package main
 
-import "fmt"
+import "github.com/Dev-Etto/job-board-api/router"
+
+
 
 
 func main() {
-	fmt.Println("Hello World")
+	router.Initialize()
 }
