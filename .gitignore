@@ -4,7 +4,8 @@
 *.dll
 *.so
 *.dylib
-
+*go.sum
+go.sum
 # Test Binary
 
 *.test
